@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2 class="center-align">Le tue Password</h2>
+
+    <div class="row">
+        <form class="col s12" method="POST" action="{{ url_for('dashboard') }}">
+            <div class="input-field col s12">
+                <label for="master_password">Master Password per sbloccare:</label>
+                <input type="password" id="master_password" name="master_password" required class="validate">
+                <button type="submit" class="btn waves-effect waves-light light-blue darken-3" style="margin-top: 15px;">
+                    Sblocca
+                    <i class="material-icons right">lock_open</i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {% if decrypted_passwords %}
+        <ul class="collection">
+            {% for entry in decrypted_passwords %}
+                <li class="collection-item avatar">
+                    <i class="material-icons circle light-blue darken-3">vpn_key</i>
+                    <span class="title"><strong>{{ entry.name }}</strong></span>
+                    <p>Username: {{ entry.username_entry }}<br>
+                       Password: <span class="revealed-password">{{ entry.decrypted_password }}</span>
+                    </p>
+                    <div class="secondary-content">
+                        <a href="{{ url_for('edit_password', entry_id=entry.id) }}" class="waves-effect waves-light btn-small light-blue darken-1"><i class="material-icons">edit</i></a>
+                        <form action="{{ url_for('delete_password', entry_id=entry.id) }}" method="POST" class="inline-form">
+                            <button type="submit" class="waves-effect waves-light btn-small red darken-1"><i class="material-icons">delete</i></button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="center-align flow-text">Nessuna password salvata o Master Password non inserita/corretta.</p>
+    {% endif %}
+
+    <div class="fixed-action-btn">
+        <a href="{{ url_for('add_password') }}" class="btn-floating btn-large waves-effect waves-light light-blue darken-3">
+            <i class="material-icons">add</i>
+        </a>
+    </div>
+
+    <style>
+        /* Stili aggiuntivi per i pulsanti inline nella dashboard */
+        .inline-form {
+            display: inline-block;
+            margin-left: 5px; /* Spazio tra i pulsanti */
+        }
+        .revealed-password {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            color: #28a745; /* green-text */
+        }
+    </style>
+{% endblock %}

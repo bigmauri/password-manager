@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2 class="center-align">Login</h2>
+    <div class="row">
+        <form class="col s12" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.username.label }}
+                    {{ form.username(class_="validate") }}
+                    {% for error in form.username.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ form.password.label }}
+                    {{ form.password(class_="validate") }}
+                    {% for error in form.password.errors %}
+                        <span class="helper-text red-text">{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row center-align">
+                <button type="submit" class="btn waves-effect waves-light light-blue darken-3">
+                    Accedi
+                    <i class="material-icons right">login</i>
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

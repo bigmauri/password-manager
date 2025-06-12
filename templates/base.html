@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+<body>
+    <nav class="light-blue darken-3"> <div class="nav-wrapper">
+            <a href="{{ url_for('index') }}" class="brand-logo center">Password Manager</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down"> <li><a href="{{ url_for('index') }}" class="white-text">Home</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('dashboard') }}" class="white-text">Dashboard</a></li>
+                    <li><a href="{{ url_for('add_password') }}" class="white-text">Aggiungi Password</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="white-text">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}" class="white-text">Login</a></li>
+                    <li><a href="{{ url_for('register') }}" class="white-text">Registrati</a></li>
+                {% endif %}
+            </ul>
+            </div>
+    </nav>
+
+    <div class="container"> {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="card {{ 'green lighten-4' if category == 'success' else 'red lighten-4' }} z-depth-2">
+                        <div class="card-content">
+                            <p class="center-align">{{ message }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        // Inizializza eventuali componenti Materialize se necessario, ad esempio i Tabs o i Modals
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit(); // Inizializza tutti i componenti Materialize
+        });
+    </script>
+</body>
+</html>
