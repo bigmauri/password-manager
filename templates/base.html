@@ -9,6 +9,11 @@
     </head>
 <body>
     <nav class="light-blue darken-3"> <div class="nav-wrapper">
+            <ul class="left hide-on-med-and-down">
+                {% if current_user.is_authenticated %}
+                    <li><a href="#" class="white-text" style="pointer-events: none; cursor: default;">Benvenuto, {{ current_user.username }}!</a></li>
+                {% endif %}
+            </ul>
             <a href="{{ url_for('index') }}" class="brand-logo center">Password Manager</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down"> <li><a href="{{ url_for('index') }}" class="white-text">Home</a></li>
                 {% if current_user.is_authenticated %}
