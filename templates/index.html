@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Benvenuto nel tuo Password Manager Sicuro!</h1>
-    <p>Accedi o registrati per iniziare a gestire le tue password in modo sicuro.</p>
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="{{ url_for('login') }}" class="btn">Login</a>
-        <a href="{{ url_for('register') }}" class="btn">Registrati</a>
-    </div>
+
+    {% if not current_user.is_authenticated %}
+        <p>Accedi o registrati per iniziare a gestire le tue password in modo sicuro.</p>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url_for('login') }}" class="btn">Login</a>
+            <a href="{{ url_for('register') }}" class="btn">Registrati</a>
+        </div>
+    {% endif %}
+
 {% endblock %}
